@@ -1,0 +1,6 @@
+BOOTMAGIC_ENABLE = yes      
+CONSOLE_ENABLE = yes       
+COMMAND_ENABLE = no         
+ENCODER_ENABLE = no
+RGB_MATRIX_ENABLE = yes
+VIA_ENABLE = no
