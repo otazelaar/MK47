@@ -36,6 +36,12 @@ enum tap_dance_indexes {
   TD_SEARCH,
 };
 
+enum combo_events {
+    LA_COMBO_OS_LSFT_LA_SYM,    
+    LA_COMBO_LA_SYM_LA_NUM,
+    COMBO_COUNT,
+};
+
 enum keycodes {
     // Custom oneshot mod implementation with no timers.
     OS_SHFT = SAFE_RANGE,
@@ -45,6 +51,9 @@ enum keycodes {
 
     SW_WIN,  // Switch to next window         (cmd-tab)
 };
+
+const uint16_t PROGMEM os_lsft_la_sym_combo[] = {OS_LSFT, LA_SYM, COMBO_END};
+const uint16_t PROGMEM la_sym_la_num_combo[] = {LA_SYM, LA_NUM, COMBO_END};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -222,6 +231,28 @@ oneshot_state os_cmd_state = os_up_unqueued;
 
 bool sw_win_active = false;
 
+void process_combo_event(uint16_t combo_index, bool pressed) {
+  switch(combo_index) {
+    case LA_COMBO_OS_LSFT_LA_SYM:
+      if (pressed) {
+        layer_on(1);
+      } else {
+        layer_off(1);
+      }
+      break;
+  }
+
+  switch(combo_index) {
+    case LA_COMBO_LA_SYM_LA_NUM:
+      if (pressed) {
+        layer_on(3);
+      } else {
+        layer_off(3);
+      }
+      break;
+  }
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     // Alt-Tab
@@ -280,6 +311,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return update_tri_layer_state(state, SYM, NAV, NUM);
 }
 
-// layer_state_t layer_state_set_user(layer_state_t state) {
-//     return update_tri_layer_state(state, SYM, OS_LSFT, NUM);
-// }
+combo_t key_combos[COMBO_COUNT] = {
+    [LA_COMBO_OS_LSFT_LA_SYM] = COMBO(os_lsft_la_sym_combo, LA_NUM),
+    [LA_COMBO_LA_SYM_LA_NUM] = COMBO(la_sym_la_num_combo, LA_NAV),
+};
