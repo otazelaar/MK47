@@ -55,7 +55,7 @@ enum keycodes {
 
 const uint16_t PROGMEM os_lsft_la_sym_combo[] = {OS_LSFT, LA_SYM, COMBO_END};
 const uint16_t PROGMEM la_sym_la_num_combo[] = {LA_SYM, LA_NUM, COMBO_END};
-const uint16_t PROGMEM n_e_i_combo[] = {KC_ENT, KC_I, COMBO_END};
+const uint16_t PROGMEM n_e_i_combo[] = {KC_N, KC_E, KC_I, COMBO_END};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
