@@ -29,16 +29,17 @@ enum layers {
 };
 
 enum custom_keycodes {
-  ALT_TAB = SAFE_RANGE,
-};
+    ALT_TAB = SAFE_RANGE,
+    };
 
 enum tap_dance_indexes {
-  TD_SEARCH,
+    TD_SEARCH,
 };
 
 enum combo_events {
-    LA_COMBO_OS_LSFT_LA_SYM,    
-    LA_COMBO_LA_SYM_LA_NUM,
+    LA_COMBO_NUM,    
+    LA_COMBO_NAV,
+    COMBO_ENTER,
     COMBO_COUNT,
 };
 
@@ -47,13 +48,14 @@ enum keycodes {
     OS_SHFT = SAFE_RANGE,
     OS_CTRL,
     OS_ALT,
-    OS_CMD,
+    OS_CMD,    
 
     SW_WIN,  // Switch to next window         (cmd-tab)
 };
 
 const uint16_t PROGMEM os_lsft_la_sym_combo[] = {OS_LSFT, LA_SYM, COMBO_END};
 const uint16_t PROGMEM la_sym_la_num_combo[] = {LA_SYM, LA_NUM, COMBO_END};
+const uint16_t PROGMEM n_e_i_combo[] = {KC_N, KC_E, KC_I, COMBO_END};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -84,12 +86,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*  SYMBOLS LAYER
 * ,-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------.
 * |       |       |       |       |       |       |       |       |       |       |       |       | 
-* |  ESC  |   [   |   {   |   (   |   ~   |       |       |   ^   |   )   |   }   |   ]   |   `   |
+* |  ESC  |   [   |   (   |   {   |   ~   |       |       |   ^   |   }   |   )   |   ]   |   `   |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 * |       |       |       |       |       |       |       |       |       |       |       |       | 
 * |   -   |   *   |   =   |   _   |   $   |       |       |   #   |  CMD  |  ALT  |  CTL  |  SHFT |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-* |       |       |       |       |       |       |       |       |       |       |       |       | 
+* |       |       |       |       |       |       |       |       |       |       |       |       |
 * |   +   |   |   |   @   |   \   |   %   |       |       |       |   &   |   ;   |   :   |   !   |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 * |       |       |       |       |       |       |       |       |       |       |       |       | 
@@ -98,10 +100,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 */
 
     [SYM] = LAYOUT(
-        KC_ESC,    KC_LBRC,   KC_LCBR,   KC_LPRN,   KC_TILD,  XXXXXXX, XXXXXXX,   KC_CIRC,  KC_RPRN,  KC_RCBR,   KC_RBRC,   KC_GRV,
+        KC_ESC,    KC_LBRC,   KC_LPRN,   KC_LCBR,   KC_TILD,  XXXXXXX, XXXXXXX,   KC_CIRC,  KC_RCBR,  KC_RPRN,   KC_RBRC,   KC_GRV,
         KC_MINS,   KC_ASTR,   KC_EQL,    KC_UNDS,   KC_DLR,   XXXXXXX, XXXXXXX,   KC_HASH,  OS_CMD,   OS_ALT,    OS_CTRL,   OS_SHFT,
         KC_PLUS,   KC_PIPE,   KC_AT,     KC_BSLS,   KC_PERC,  XXXXXXX, XXXXXXX,   KC_NO,    KC_AMPR,  KC_SCLN,   KC_COLN,   KC_EXLM,
-        XXXXXXX,   XXXXXXX,   XXXXXXX,   _______,   _______,       SW_WIN,       _______,  _______,  _______,   XXXXXXX,   XXXXXXX
+        XXXXXXX,   XXXXXXX,   XXXXXXX,   _______,   _______,        SW_WIN,       _______,  _______,  _______,   XXXXXXX,   XXXXXXX
     ),
 
 /*  NAVIGATION LAYER
@@ -156,21 +158,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 * |  TAB  |  ;    |  (    |  )    |  \    |       |       |   +   |   7   |   8   |   9   |   -   |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 * |       |       |       |       |       |       |       |       |       |       |       |       | 
-* |  SHFT |  CTRL |  ALT  |  CMD  |       |       |       |  ,    |   4   |   5   |   6   |   =   
+* |  SHFT |  CTRL |  ALT  |  CMD  |       |       |       |  ,    |   4   |   5   |   6   | bcspc |   
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 * |       |       |       |       |       |       |       |       |       |       |       |       | 
-* |       |  `    |  [    |  ]    |       |       |       |   .   |   1   |   2   |   3   |   0   |
+* |       |  `    |  [    |  ]    |       |       |       |   .   |   1   |   2   |   3   |  ENT  |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 * |       |       |       |       |       |       |       |       |       |       |       |       | 
-* |       |       |       |  NAV  |  SPC  |      SWAP     |  LSFT |  SYM  |NUMPAD |       |       |
+* |       |       |       |  NAV  |  SPC  |      SWAP     |  LSFT |   0   |NUMPAD |       |       |
 * `-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------'
 */
 
     [NUMPAD] = LAYOUT(
         KC_TAB,    KC_SCLN,    KC_LPRN,   KC_RPRN,   KC_BSLS,  XXXXXXX, XXXXXXX,   KC_PLUS,   KC_7,     KC_8,     KC_9,     KC_MINUS,
-        OS_SHFT,   OS_CTRL,    OS_ALT,    OS_CMD,    XXXXXXX,  XXXXXXX, XXXXXXX,   KC_COMM,   KC_4,     KC_5,     KC_6,     KC_EQUAL,
-        XXXXXXX,   KC_GRAVE,   KC_LBRC,   KC_RBRC,   XXXXXXX,  XXXXXXX, XXXXXXX,   KC_DOT,    KC_1,     KC_2,     KC_3,     KC_0,  
-        XXXXXXX,   XXXXXXX,    XXXXXXX,   _______,   _______,       SW_WIN,       _______,   KC_BSPC,  _______,  XXXXXXX,  XXXXXXX
+        OS_SHFT,   OS_CTRL,    OS_ALT,    OS_CMD,    XXXXXXX,  XXXXXXX, XXXXXXX,   KC_COMM,   KC_4,     KC_5,     KC_6,     KC_BSPC,
+        XXXXXXX,   KC_GRAVE,   KC_LBRC,   KC_RBRC,   XXXXXXX,  XXXXXXX, XXXXXXX,   KC_DOT,    KC_1,     KC_2,     KC_3,     KC_ENT,  
+        XXXXXXX,   XXXXXXX,    XXXXXXX,   _______,   _______,        SW_WIN,       _______,   KC_0,     _______,  XXXXXXX,  XXXXXXX
       ),
 };
 
@@ -218,7 +220,7 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
     case OS_CTRL:
     case OS_ALT:
     case OS_CMD:
-        return true;
+        return true; 
     default:
         return false;
     }
@@ -233,7 +235,7 @@ bool sw_win_active = false;
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
   switch(combo_index) {
-    case LA_COMBO_OS_LSFT_LA_SYM:
+    case LA_COMBO_NUM:
       if (pressed) {
         layer_on(1);
       } else {
@@ -243,7 +245,17 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
   }
 
   switch(combo_index) {
-    case LA_COMBO_LA_SYM_LA_NUM:
+    case LA_COMBO_NAV:
+      if (pressed) {
+        layer_on(3);
+      } else {
+        layer_off(3);
+      }
+      break;
+  }
+  
+  switch(combo_index) {
+    case COMBO_ENTER:
       if (pressed) {
         layer_on(3);
       } else {
@@ -312,6 +324,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 combo_t key_combos[COMBO_COUNT] = {
-    [LA_COMBO_OS_LSFT_LA_SYM] = COMBO(os_lsft_la_sym_combo, LA_NUM),
-    [LA_COMBO_LA_SYM_LA_NUM] = COMBO(la_sym_la_num_combo, LA_NAV),
+    [LA_COMBO_NUM] = COMBO(os_lsft_la_sym_combo, LA_NUM),
+    [LA_COMBO_NAV] = COMBO(la_sym_la_num_combo, LA_NAV),
+    [COMBO_ENTER] = COMBO(n_e_i_combo, KC_ENT),
 };
