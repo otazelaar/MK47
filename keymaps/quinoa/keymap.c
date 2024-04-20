@@ -4,19 +4,18 @@
 #include "swapper.h"
 #include "features/select_word.h"
 
-#define HOME G(KC_LEFT)
-#define END G(KC_RGHT)
-#define FWD G(KC_RBRC)
-#define BACK G(KC_LBRC)
+#define HOME G(KC_UP)
+#define END G(KC_DOWN)
 #define TABL G(S(KC_LBRC))
 #define TABR G(S(KC_RBRC))
-#define SPCL A(G(KC_LEFT))
-#define SPC_R A(G(KC_RGHT))
-#define DEL_WORD C(KC_BSPC)
+#define DEL_WORD A(KC_BSPC)
+#define DEL_LINE G(KC_BSPC)
 #define LA_SYM MO(SYM)
 #define LA_NAV LT(NAV, KC_SPC)
 #define LA_R_NAV LT(NAV, KC_TAB)
 #define OS_LSFT OSM(MOD_LSFT)
+#define UNDO G(KC_Z)
+#define REDO LSFT(G(KC_Z))
 
 bool is_alt_tab_active = false; 
 uint16_t alt_tab_timer = 0;
@@ -39,12 +38,18 @@ enum tap_dance_indexes {
 };
 
 enum combo_events {
-    LA_COMBO_NUM,    
-    LA_COMBO_NAV,
-    COMBO_ENTER,
-    COMBO_BSPC,
+    // Left Side
     COMBO_SHIFT,
     COMBO_TAB,
+    COMBO_UNDO,
+    COMBO_REDO,
+
+    // Right Side    
+    COMBO_ENTER,
+    LA_COMBO_NAV,        
+    COMBO_BSPC,
+    COMBO_DELETE,
+    COMBO_DELETE_LINE,
     COMBO_COUNT,
 };
 
@@ -58,11 +63,18 @@ enum keycodes {
     SW_WIN,  // Switch to next window         (cmd-tab)
 };
 
-const uint16_t PROGMEM nav_combo[] = {KC_TAB, LA_SYM, COMBO_END};
-const uint16_t PROGMEM enter_combo[] = {KC_N, KC_E, KC_I, COMBO_END};
-const uint16_t PROGMEM bspc_combo[] = {KC_E, KC_I, KC_O, COMBO_END};
+// Left Side
 const uint16_t PROGMEM shift_combo[] = {KC_R, KC_S, KC_T, COMBO_END};
 const uint16_t PROGMEM tab_combo[] = {KC_A, KC_R, KC_S, COMBO_END};
+const uint16_t PROGMEM undo_combo[] = {KC_X, KC_C, KC_D, COMBO_END};
+const uint16_t PROGMEM redo_combo[] = {KC_Z, KC_X, KC_C, KC_D, COMBO_END};
+
+// Right Side
+const uint16_t PROGMEM enter_combo[] = {KC_N, KC_E, KC_I, COMBO_END};
+const uint16_t PROGMEM nav_combo[] = {KC_TAB, LA_SYM, COMBO_END};
+const uint16_t PROGMEM bspc_combo[] = {KC_E, KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM delete_combo[] = {KC_L, KC_U, KC_Y, COMBO_END};
+const uint16_t PROGMEM delete_line_combo[] = {KC_L, KC_U, KC_Y, KC_QUOT, COMBO_END};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -80,7 +92,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |       |       |       |       |       |               |       |       |       |       |       | 
  * |       |       |  REP  |  NAV  | SHFT  |      SWAP     |NAV-TAB|  SYM  |       |       |SEARCH |
  * `-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------'
- * 
 */
 
     [DEF] = LAYOUT(
@@ -302,10 +313,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     }
 
     combo_t key_combos[COMBO_COUNT] = {
-            [LA_COMBO_NAV] = COMBO(nav_combo, LA_NAV),
-            [COMBO_ENTER] = COMBO(enter_combo, KC_ENT),
-            [COMBO_BSPC] = COMBO(bspc_combo, KC_BSPC),
-            [COMBO_SHIFT] = COMBO(shift_combo, OS_SHFT),
-            [COMBO_TAB] = COMBO(tab_combo, KC_TAB),
-    };
+        // Left Side
+        [COMBO_SHIFT] = COMBO(shift_combo, OS_SHFT),
+        [COMBO_TAB] = COMBO(tab_combo, KC_TAB),
+        [COMBO_UNDO] = COMBO(undo_combo, UNDO),
+        [COMBO_REDO] = COMBO(redo_combo, REDO),
+        
+        // Right Side
+        [COMBO_ENTER] = COMBO(enter_combo, KC_ENT),        
+        [LA_COMBO_NAV] = COMBO(nav_combo, LA_NAV),
+        [COMBO_BSPC] = COMBO(bspc_combo, KC_BSPC),
+        [COMBO_DELETE] = COMBO(delete_combo, DEL_WORD),
+        [COMBO_DELETE_LINE] = COMBO(delete_line_combo, DEL_LINE),
 
+    };
