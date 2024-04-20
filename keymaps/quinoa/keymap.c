@@ -43,6 +43,8 @@ enum combo_events {
     LA_COMBO_NAV,
     COMBO_ENTER,
     COMBO_BSPC,
+    COMBO_SHIFT,
+    COMBO_TAB,
     COMBO_COUNT,
 };
 
@@ -59,18 +61,20 @@ enum keycodes {
 const uint16_t PROGMEM nav_combo[] = {KC_TAB, LA_SYM, COMBO_END};
 const uint16_t PROGMEM enter_combo[] = {KC_N, KC_E, KC_I, COMBO_END};
 const uint16_t PROGMEM bspc_combo[] = {KC_E, KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM shift_combo[] = {KC_R, KC_S, KC_T, COMBO_END};
+const uint16_t PROGMEM tab_combo[] = {KC_A, KC_R, KC_S, COMBO_END};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /*  DEFAULT LAYER
  * ,-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------.
- * |       |       |       |       |       |       |       |       |       |       |       |       | 
- * |   Q   |   W   |   F   |   P   |   B   |       |       |   J   |   L   |   U   |   Y   |   "   |
+ * |       |       |       |       |       |       |       |       |       |       |       |   "   | 
+ * |   Q   |   W   |   F   |   P   |   B   |       |       |   J   |   L   |   U   |   Y   |   '   |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
  * |       |       |       |       |       |       |       |       |       |       |       |       | 
  * |   A   |   R   |   S   |   T   |   G   |       |       |   M   |   N   |   E   |   I   |   O   |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * |       |       |       |       |       |       |       |       |       |       |       |       |
+ * |       |       |       |       |       |       |       |       |       |   <   |   >   |   ?   |
  * |   Z   |   X   |   C   |   D   |   V   |       |       |   K   |   H   |   ,   |   .   |   /   |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
  * |       |       |       |       |       |               |       |       |       |       |       | 
@@ -141,9 +145,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     * |  SHFT |  CTRL |  ALT  |  CMD  |       |       |       |   0   |   4   |   5   |   6   | bcspc |   
     * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
     * |       |       |       |       |       |       |       |       |       |       |       |       | 
-    * |  TAB  |       |       |  SPC  |       |       |       |   .   |   1   |   2   |   3   |  ENT  |
+    * |  TAB  |       | SHIFT |  SPC  |       |       |       |   .   |   1   |   2   |   3   |  ENT  |
     * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-    * |       |       |       | HOLD  |       |       |       |       | HOLD  |       |       |       | 
+    * |       |       |       | HOLD  |       |       |       |       | HOLD  |       |       |       |
     * |       |       |  REP  |  NAV  | SHFT  |      SWAP     |NAV-TAB|  SYM  |       |       |       |
     * `-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------'
     */
@@ -151,7 +155,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [NUMPAD] = LAYOUT(
             XXXXXXX,   KC_SCLN,    KC_LPRN,   KC_RPRN,   KC_BSLS,  XXXXXXX, XXXXXXX,   KC_COMM,   KC_7,     KC_8,      KC_9,     KC_DLR,
             OS_SHFT,   OS_CTRL,    OS_ALT,    OS_CMD,    XXXXXXX,  XXXXXXX, XXXXXXX,   KC_0,      KC_4,     KC_5,      KC_6,     KC_BSPC,
-            KC_TAB,    XXXXXXX,    XXXXXXX,   KC_SPC,    XXXXXXX,  XXXXXXX, XXXXXXX,   KC_DOT,    KC_1,     KC_2,      KC_3,     KC_ENT,  
+            KC_TAB,    XXXXXXX,    KC_LSFT,   KC_SPC,    XXXXXXX,  XXXXXXX, XXXXXXX,   KC_DOT,    KC_1,     KC_2,      KC_3,     KC_ENT,  
             XXXXXXX,   XXXXXXX,    _______,   _______,   _______,        SW_WIN,       _______,   _______,  XXXXXXX,   XXXXXXX,  XXXXXXX
         ),
     };
@@ -301,5 +305,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             [LA_COMBO_NAV] = COMBO(nav_combo, LA_NAV),
             [COMBO_ENTER] = COMBO(enter_combo, KC_ENT),
             [COMBO_BSPC] = COMBO(bspc_combo, KC_BSPC),
+            [COMBO_SHIFT] = COMBO(shift_combo, OS_SHFT),
+            [COMBO_TAB] = COMBO(tab_combo, KC_TAB),
     };
 
