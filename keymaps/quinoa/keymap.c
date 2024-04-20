@@ -15,7 +15,7 @@
 #define DEL_WORD C(KC_BSPC)
 #define LA_SYM MO(SYM)
 #define LA_NAV LT(NAV, KC_SPC)
-#define LA_NUM LT(NUMPAD, KC_TAB)
+#define LA_R_NAV LT(NAV, KC_TAB)
 #define OS_LSFT OSM(MOD_LSFT)
 
 bool is_alt_tab_active = false; 
@@ -25,7 +25,6 @@ enum layers {
     DEF,
     SYM,
     NAV,
-    NUM,
     NUMPAD,
 };
 
@@ -75,16 +74,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |   Z   |   X   |   C   |   D   |   V   |       |       |   K   |   H   |   ,   |   .   |   /   |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
  * |       |       |       |       |       |               |       |       |       |       |       | 
- * |       |       |  REP  |  NAV  | SHFT  |      SWAP     |  TAB  |  SYM  |       |       |SEARCH |
+ * |       |       |  REP  |  NAV  | SHFT  |      SWAP     |NAV-TAB|  SYM  |       |       |SEARCH |
  * `-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------'
  * 
 */
 
     [DEF] = LAYOUT(
-        KC_Q,      KC_W,      KC_F,      KC_P,      KC_B,     XXXXXXX, XXXXXXX,   KC_J,     KC_L,    KC_U,      KC_Y,      KC_QUOT,
-        KC_A,      KC_R,      KC_S,      KC_T,      KC_G,     XXXXXXX, XXXXXXX,   KC_M,     KC_N,    KC_E,      KC_I,      KC_O,
-        KC_Z,      KC_X,      KC_C,      KC_D,      KC_V,     XXXXXXX, XXXXXXX,   KC_K,     KC_H,    KC_COMM,   KC_DOT,    KC_SLSH,
-        XXXXXXX,   XXXXXXX,   QK_REP,    LA_NAV,    OS_LSFT,        SW_WIN,       KC_TAB,   LA_SYM,  XXXXXXX,   XXXXXXX,   TD(TD_SEARCH)
+        KC_Q,      KC_W,      KC_F,      KC_P,      KC_B,     XXXXXXX, XXXXXXX,   KC_J,      KC_L,    KC_U,      KC_Y,      KC_QUOT,
+        KC_A,      KC_R,      KC_S,      KC_T,      KC_G,     XXXXXXX, XXXXXXX,   KC_M,      KC_N,    KC_E,      KC_I,      KC_O,
+        KC_Z,      KC_X,      KC_C,      KC_D,      KC_V,     XXXXXXX, XXXXXXX,   KC_K,      KC_H,    KC_COMM,   KC_DOT,    KC_SLSH,
+        XXXXXXX,   XXXXXXX,   QK_REP,    LA_NAV,    OS_LSFT,        SW_WIN,       LA_R_NAV,  LA_SYM,  XXXXXXX,   XXXXXXX,   TD(TD_SEARCH)
     ),
 
 /*  SYMBOLS LAYER
@@ -98,8 +97,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 * |       |       |       |       |       |       |       |       |       |       |       |       |
 * |   +   |   |   |   @   |   \   |   %   |       |       |       |   &   |   ;   |   :   |   !   |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-* |       |       |       |       |       |       |       |       |       |       |       |       | 
-* |       |       |  REP  |  NAV  |  SHFT |      SWAP     |  TAB  |  SYM  |       |       |       |
+* |       |       |       |       |       |       |       |       | HOLD  |       |       |       | 
+* |       |       |  REP  |  NAV  |  SHFT |      SWAP     |NAV-TAB|  SYM  |       |       |       |
 * `-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------'
 */
 
@@ -113,70 +112,47 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*  NAVIGATION LAYER
     * ,-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------.
     * |       |       |       |       |       |       |       |       |       |       |       |       | 
-    * |  TAB  |  SWIN |  TABL |  TABR |  VOLU |       |       |  BOOT |  HOME |   UP  |  END  |  DELW |
+    * |  SWIN |  TABL |  TABR |  VOLU |       |       |       |  BOOT |  HOME |   UP  |  END  |  DELW |
     * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
     * |       |       |       |       |       |       |       |       |       |       |       |       | 
-    * |  SHFT |  CTRL |  ALT  |  CMD  |  VOLD |       |       |  TOGG |  LEFT |  DOWN | RIGHT |  BSPC |
+    * | SHIFT | SELWD |  MPLY |  VOLD |       |       |       | CWTOG | LEFT  |  DOWN | RIGHT | BCSPC |
     * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
     * |       |       |       |       |       |       |       |       |       |       |       |       | 
-    * |       |       |       |SELWORD|  MPLY |       |       |       |  PGUP |  PGDN |       |  ENT  |
-    * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-    * |       |       |       |       |       |       |       |       |       |       |       |       | 
-    * |       |       |  REP  |  NAV  | SHFT  |      SWAP     |  TAB  |  SYM  |       |       |       |
+    * |  SHFT |  CTRL |  ALT  |  CMD  |       |       |       |       |  PGUP |  PGDN |  SPC  |  ENT  |
+    * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------| 
+    * |       |       |       | HOLD  |       |       |       |OR HOLD|       |       |       |       | 
+    * |       |       |  REP  |  NAV  | SHFT  |      SWAP     |NAV-TAB|  SYM  |       |       |       |
     * `-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------'
-    */
+    */ 
 
     [NAV] = LAYOUT(
-            KC_TAB,    SW_WIN,    TABL,      TABR,      KC_VOLU,  XXXXXXX, XXXXXXX,   QK_BOOT,  HOME,     KC_UP,     END,       DEL_WORD,
-            OS_SHFT,   OS_CTRL,   OS_ALT,    OS_CMD,    KC_VOLD,  XXXXXXX, XXXXXXX,   CW_TOGG,  KC_LEFT,  KC_DOWN,   KC_RGHT,   KC_BSPC,
-            XXXXXXX,   XXXXXXX,   XXXXXXX,   SELWORD,   KC_MPLY,  XXXXXXX, XXXXXXX,   XXXXXXX,  KC_PGUP,  KC_PGDN,   XXXXXXX,   KC_ENT,
-            XXXXXXX,   XXXXXXX,   _______,   _______,   _______,        SW_WIN,       _______,  _______,  XXXXXXX,   XXXXXXX,   XXXXXXX
-    ),
-
-    /*  NUM LAYER
-    * ,-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------.
-    * |       |       |       |       |       |       |       |       |       |       |       |       | 
-    * |   1   |   2   |   3   |   4   |   5   |       |       |   6   |   7   |   8   |   9   |   0   |
-    * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-    * |       |       |       |       |       |       |       |       |       |       |       |       | 
-    * |  SHFT |  CTRL |  ALT  |  CMD  |  F11  |       |       |  F12  |  CMD  |  ALT  |  CTRL |  SHFT |
-    * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-    * |       |       |       |       |       |       |       |       |       |       |       |       | 
-    * |  F1   |  F2   |  F3   |  F4   |  F5   |       |       |  F6   |  F7   |  F8   |  F9   |  F10  |
-    * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-    * |       |       |       |       |       |       |       |       |       |       |       |       | 
-    * |       |       |  REP  |  NAV  | SHFT  |      SWAP     |  LSFT |  SYM  |NUMPAD |       |       |
-    * `-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------'
-    */
-
-    [NUM] = LAYOUT(
-            KC_1,      KC_2,      KC_3,      KC_4,      KC_5,     XXXXXXX, XXXXXXX,   KC_6,     KC_7,     KC_8,      KC_9,      KC_0,
-            OS_SHFT,   OS_CTRL,   OS_ALT,    OS_CMD,    KC_F11,   XXXXXXX, XXXXXXX,   KC_F12,   OS_CMD,   OS_ALT,    OS_CTRL,   OS_SHFT,
-            KC_F1,     KC_F2,     KC_F3,     KC_F4,     KC_F5,    XXXXXXX, XXXXXXX,   KC_F6,    KC_F7,    KC_F8,     KC_F9,     KC_F10,
-            XXXXXXX,   XXXXXXX,   _______,   _______,   _______,        SW_WIN,       _______,  _______,  XXXXXXX,   XXXXXXX,   XXXXXXX
+            SW_WIN,    TABL,      TABR,      KC_VOLU,  XXXXXXX,  XXXXXXX, XXXXXXX,   QK_BOOTLOADER,   HOME,     KC_UP,     END,       DEL_WORD,
+            OS_SHFT,   SELWORD,   KC_MPLY,   KC_VOLD,  XXXXXXX,  XXXXXXX, XXXXXXX,   CW_TOGG,         KC_LEFT,  KC_DOWN,   KC_RGHT,   KC_BSPC,
+            OS_SHFT,   OS_CTRL,   OS_ALT,    OS_CMD,   XXXXXXX,  XXXXXXX, XXXXXXX,   XXXXXXX,         KC_PGUP,  KC_PGDN,   KC_SPC,    KC_ENT,
+            XXXXXXX,   XXXXXXX,   _______,   _______,  _______,        SW_WIN,       _______,         _______,  XXXXXXX,   XXXXXXX,   XXXXXXX
     ),
 
     /*  NUMPAD LAYER
     * ,-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------.
     * |       |       |       |       |       |       |       |       |       |       |       |       | 
-    * |  TAB  |  ;    |  (    |  )    |  \    |       |       |   +   |   7   |   8   |   9   |   $   |
+    * |       |  ;    |  (    |  )    |  \    |       |       |   ,   |   7   |   8   |   9   |   $   |
     * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
     * |       |       |       |       |       |       |       |       |       |       |       |       | 
-    * |  SHFT |  CTRL |  ALT  |  CMD  |       |       |       |  ,    |   4   |   5   |   6   | bcspc |   
+    * |  SHFT |  CTRL |  ALT  |  CMD  |       |       |       |   0   |   4   |   5   |   6   | bcspc |   
     * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
     * |       |       |       |       |       |       |       |       |       |       |       |       | 
-    * |       |  `    |  [    |  ]    |       |       |       |   .   |   1   |   2   |   3   |  ENT  |
+    * |  TAB  |       |       |  SPC  |       |       |       |   .   |   1   |   2   |   3   |  ENT  |
     * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-    * |       |       |       |       |       |       |       |       |       |       |       |       | 
-    * |       |       |  REP  |  NAV  | SHFT  |      SWAP     |  TAB  |  SYM  |   0   |       |       |
+    * |       |       |       | HOLD  |       |       |       |       | HOLD  |       |       |       | 
+    * |       |       |  REP  |  NAV  | SHFT  |      SWAP     |NAV-TAB|  SYM  |       |       |       |
     * `-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------'
     */
 
     [NUMPAD] = LAYOUT(
-            KC_TAB,    KC_SCLN,    KC_LPRN,   KC_RPRN,   KC_BSLS,  XXXXXXX, XXXXXXX,   KC_PLUS,   KC_7,      KC_8,   KC_9,     KC_DLR,
-            OS_SHFT,   OS_CTRL,    OS_ALT,    OS_CMD,    KC_DLR,   XXXXXXX, XXXXXXX,   KC_COMM,   KC_4,      KC_5,   KC_6,     KC_BSPC,
-            XXXXXXX,   KC_GRAVE,   KC_LBRC,   KC_RBRC,   XXXXXXX,  XXXXXXX, XXXXXXX,   KC_DOT,    KC_1,      KC_2,   KC_3,     KC_ENT,  
-            XXXXXXX,   XXXXXXX,    _______,   _______,   _______,        SW_WIN,       _______,   XXXXXXX,   KC_0,   XXXXXXX,  XXXXXXX
+            XXXXXXX,   KC_SCLN,    KC_LPRN,   KC_RPRN,   KC_BSLS,  XXXXXXX, XXXXXXX,   KC_COMM,   KC_7,     KC_8,      KC_9,     KC_DLR,
+            OS_SHFT,   OS_CTRL,    OS_ALT,    OS_CMD,    XXXXXXX,  XXXXXXX, XXXXXXX,   KC_0,      KC_4,     KC_5,      KC_6,     KC_BSPC,
+            KC_TAB,    XXXXXXX,    XXXXXXX,   KC_SPC,    XXXXXXX,  XXXXXXX, XXXXXXX,   KC_DOT,    KC_1,     KC_2,      KC_3,     KC_ENT,  
+            XXXXXXX,   XXXXXXX,    _______,   _______,   _______,        SW_WIN,       _______,   _______,  XXXXXXX,   XXXXXXX,  XXXXXXX
         ),
     };
 
