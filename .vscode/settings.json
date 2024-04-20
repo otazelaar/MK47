@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "oneshot.h": "c"
+        "oneshot.h": "c",
+        "select_word.h": "c"
     }
 }
