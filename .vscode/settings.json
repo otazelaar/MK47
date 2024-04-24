@@ -1,6 +1,12 @@
 {
     "files.associations": {
         "oneshot.h": "c",
-        "select_word.h": "c"
+        "select_word.h": "c",
+        "__locale": "c",
+        "__config": "c",
+        "ios": "c",
+        "iosfwd": "c",
+        "locale": "c",
+        "string": "c"
     }
 }
