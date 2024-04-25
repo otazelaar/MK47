@@ -1,5 +1,6 @@
 #pragma once
 
+#include "quantum.h"
 #include QMK_KEYBOARD_H
 
 // Represents the four states a oneshot key can be in
@@ -14,7 +15,7 @@ typedef enum {
 // used while it is held it will be unregistered on keyup as normal, otherwise
 // it will be queued and only released after the next non-mod keyup.
 void update_oneshot(
-    oneshot_state *state,
+    oneshot_state *osstate,
     uint16_t mod,
     uint16_t trigger,
     uint16_t keycode,
