@@ -129,7 +129,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 /*  NAVIGATION LAYER
-* ,-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------.
+* ,-------+-------+-------+-------+-------+-------+-------+-------+-------+-------git +-------+-------.
 * |       |       |       |       |       |       |       |       |       |       |       |       | 
 * |  ESC  | SW WIN| TABL  | TABR  |       |       |       |  BOOT |  HOME |   UP  |  END  |  DELW |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
@@ -270,6 +270,62 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         if (!process_update_sw_win(keycode, record)) return false;        
         return true;
     }
+
+    bool process_detected_host_os_kb(os_variant_t detected_os) {
+        if (!process_detected_host_os_user(detected_os)) {
+            return false;
+        }   
+        switch (detected_os) {
+        case OS_MACOS:
+            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = true;
+            keymap_config.swap_backslash_backspace = true;
+            break;
+        case OS_IOS:
+            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = true;
+            break;
+        case OS_WINDOWS:
+            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
+            keymap_config.swap_escape_capslock = true;
+            break;
+        case OS_LINUX:
+            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
+            break;
+        case OS_UNSURE:
+            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
+            break;
+        }
+        return true;
+    }
+
+    // void process_platform_combo(uint16_t keycode, keyrecord_t *record) {
+    //     uint8_t host_os = guess_host_os();
+    //     uint16_t keycode_to_press = KC_NO;
+
+    //     if (host_os == OS_MACOS || host_os == OS_IOS) {
+    //         switch (keycode) {
+    //         case USR_COPY:
+    //             keycode_to_press = G(KC_C);
+    //             break;
+    //         case USR_PASTE:
+    //             keycode_to_press = G(KC_V);
+    //             break;
+    //         }
+    //     } else {
+    //         switch (keycode) {
+    //         case USR_COPY:
+    //             keycode_to_press = C(KC_C);
+    //             break;
+    //         case USR_PASTE:
+    //             keycode_to_press = C(KC_V);
+    //             break;
+    //         }
+    //     }
+    //     if (record->event.pressed) {
+    //         register_code16(keycode_to_press);
+    //     } else {
+    //         unregister_code16(keycode_to_press);
+    //     }
+    // }
 
     void process_combo_event(uint16_t combo_index, bool pressed) {
 
