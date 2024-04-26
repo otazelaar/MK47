@@ -1,12 +1,10 @@
-#pragma once
+#if !defined (QUINOA_LAYER_LIST)
 
-#if !defined (MIRYOKU_LAYER_LIST)
-
-#define MIRYOKU_LAYER_LIST \
-MIRYOKU_X(DEF,    "Default") \
-MIRYOKU_X(SYM,    "Symbol") \
-MIRYOKU_X(NAV,    "Navigation") \
-MIRYOKU_X(NUM,    "Numbers") \
-MIRYOKU_X(MED,    "Media") 
+#define QUINOA_LAYER_LIST \
+QUINOA_X(DEF,    "Default") \
+QUINOA_X(SYM,    "Symbol") \
+QUINOA_X(NAV,    "Navigation") \
+QUINOA_X(NUM,    "Numbers") \
+QUINOA_X(MED,    "Media") 
 
 #endif
