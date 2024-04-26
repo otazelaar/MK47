@@ -44,11 +44,11 @@ enum combo_events {
     COMBO_UNDO,
     COMBO_REDO,
 
-    // Right Side 
-    COMBO_SHIFT_RIGHT,   
+    // Right Side
+    COMBO_SHIFT_RIGHT,
     COMBO_ENTER,
     LA_COMBO_NAV_TO_SYM,
-    LA_COMBO_SYM_TO_NAV,        
+    LA_COMBO_SYM_TO_NAV,
     COMBO_BSPC,
     COMBO_DELETE,
     COMBO_DELETE_LINE,
@@ -60,7 +60,7 @@ enum keycodes {
     OS_SHFT = SAFE_RANGE,
     OS_CTRL,
     OS_ALT,
-    OS_CMD,    
+    OS_CMD,
 
     SW_WIN,  // Switch to next window         (cmd-tab)
 };
@@ -84,16 +84,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /*  DEFAULT LAYER
  * ,-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------.
- * |       |       |       |       |       |       |       |       |       |       |       |       | 
+ * |       |       |       |       |       |       |       |       |       |       |       |       |
  * |   Q   |   W   |   F   |   P   |   B   |       |       |   J   |   L   |   U   |   Y   |   ?   |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * |       |       |       |       |       |       |       |       |       |       |       |       | 
+ * |       |       |       |       |       |       |       |       |       |       |       |       |
  * |   A   |   R   |   S   |   T   |   G   |       |       |   M   |   N   |   E   |   I   |   O   |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
  * |       |       |       |       |       |       |       |       |       |   <   |   >   |   ?   |
  * |   Z   |   X   |   C   |   D   |   V   |       |       |   K   |   H   |   ,   |   .   |   /   |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * |       |       |       |       |       |               |       |       |       |       |       | 
+ * |       |       |       |       |       |               |       |       |       |       |       |
  * |       |       |  REP  |  NAV  | SHFT  |     SOTLT     |NAV-TAB|  SYM  | MEDIA |       |SEARCH |
  * `-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------'
 */
@@ -107,39 +107,39 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /*  SYMBOLS LAYER
 * ,-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------.
-* |       |       |       |       |       |       |       |       |       |       |       |       | 
+* |       |       |       |       |       |       |       |       |       |       |       |       |
 * |   \   |   [   |   (   |   {   |  ESC  |       |       |   ^   |   }   |   )   |   ]   |   "   |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-* |       |       |       |       |       |       |       |       |       |       |       |       | 
+* |       |       |       |       |       |       |       |       |       |       |       |       |
 * |   !   |   '   |   :   |   _   |   ~   |       |       |   #   |  CMD  |  ALT  |  CTRL |  SHFT |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 * |       |       |       |       |       |       |       |       |       |       |       |       |
 * |   $   |   &   |   +   |   -   |   %   |       |       |   |   |   @   |   ;   |   =   |   *   |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-* |       |       |       |       |       |       |       |       |  HOLD |       |       |       | 
+* |       |       |       |       |       |       |       |       |  HOLD |       |       |       |
 * |       |       |  REP  |  NAV  |  SHFT |     SPOTL     |NAV-TAB|  SYM  | MEDIA |       |       |
 * `-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------'
 */
 
 [SYM] = LAYOUT(
     KC_BSLS,  KC_LBRC,  KC_LPRN,  KC_LCBR,   KC_ESC,   XXXXXXX, XXXXXXX,  KC_CIRC,  KC_RCBR,  KC_RPRN,  KC_RBRC,   KC_DQT,
-    KC_EXLM,  KC_QUOT,  KC_COLN,  KC_UNDS,   KC_TILD,  XXXXXXX, XXXXXXX,  KC_HASH,  OS_CMD,   OS_ALT,   OS_CTRL,   OS_SHFT, 
+    KC_EXLM,  KC_QUOT,  KC_COLN,  KC_UNDS,   KC_TILD,  XXXXXXX, XXXXXXX,  KC_HASH,  OS_CMD,   OS_ALT,   OS_CTRL,   OS_SHFT,
     KC_DLR,   KC_AMPR,  KC_PLUS,  KC_MINS,   KC_PERC,  XXXXXXX, XXXXXXX,  KC_PIPE,  KC_AT,    KC_SCLN,  KC_EQL,    LT(LA_NAV, KC_Y),
     XXXXXXX,  XXXXXXX,  _______,  _______,   _______,        SPOTL,       _______,  _______,  _______,  XXXXXXX,   XXXXXXX
 ),
 
 /*  NAVIGATION LAYER
 * ,-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------.
-* |       |       |       |       |       |       |       |       |       |       |       |       | 
+* |       |       |       |       |       |       |       |       |       |       |       |       |
 * |  ESC  | SW WIN| TABL  | TABR  |       |       |       |  BOOT |  HOME |   UP  |  END  |  DELW |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-* |       |       |       |       |       |       |       |       |       |       |       |       | 
+* |       |       |       |       |       |       |       |       |       |       |       |       |
 * | SHIFT |  CTRL |  ALT  |  CMD  |       |       |       | BACK  | LEFT  | DOWN  | RIGHT |  BSPC |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 * |       |       |       |       |       |       |       |       |       |       |       |       |
 * |       |       |       |  TAB  |       |       |       | FORWD | PG UP | PG DN |  SPC  |  ENT  |
-* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------| 
-* |       |       |       | HOLD  |       |       |       |OR HOLD|       |       |       |       | 
+* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+* |       |       |       | HOLD  |       |       |       |OR HOLD|       |       |       |       |
 * |       |       |  REP  |  NAV  | SHFT  |     SPOTL     |NAV-TAB|  SYM  | MEDIA |       |       |
 * `-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------'
 */
@@ -153,47 +153,47 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /*  NUM LAYER
 * ,-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------.
-* |       |       |       |       |       |       |       |       |       |       |       |       | 
+* |       |       |       |       |       |       |       |       |       |       |       |       |
 * |  FN6  |  FN7  |  FN8  |  FN9  | FN10  |       |       |   ,   |   7   |   8   |   9   |   $   |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-* |       |       |       |       |       |       |       |       |       |       |       |       | 
+* |       |       |       |       |       |       |       |       |       |       |       |       |
 * |  FN1  |  FN2  |  FN3  |  FN4  |  FN5  |       |       |   0   |   4   |   5   |   6   |  BSPC |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-* |       |       |       |       |       |       |       |       |       |       |       |       | 
+* |       |       |       |       |       |       |       |       |       |       |       |       |
 * |  TAB  | CWTOG | SHIFT |  SPC  |       |       |       |   .   |   1   |   2   |   3   |  ENT  |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-* |       |       |       | HOLD  |       |       |       |       | HOLD  |       |       |       |
-* |       |       |  REP  |  NAV  | SHFT  |     SPOTL     |NAV-TAB|  SYM  | MEDIA |       |       |
+* |       |       |       | HOLD  |       |       |       |       |       |       |       |       |
+* |       |       |  REP  |  NAV  | SHFT  |     SPOTL     |NAV-TAB|   0   | MEDIA |       |       |
 * `-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------'
 */
 
 [NUM] = LAYOUT(
-    KC_F6,     KC_F7,     KC_F8,     KC_F9,     KC_F10,   XXXXXXX, XXXXXXX,  KC_COMM,   KC_7,     KC_8,      KC_9,     KC_DLR,
-    KC_F1,     KC_F2,     KC_F3,     KC_F4,     KC_F5,    XXXXXXX, XXXXXXX,  KC_0,      KC_4,     KC_5,      KC_6,     KC_BSPC,
-    KC_TAB,    CW_TOGG,   KC_LSFT,   KC_SPC,    XXXXXXX,  XXXXXXX, XXXXXXX,  KC_DOT,    KC_1,     KC_2,      KC_3,     KC_ENT,  
-    XXXXXXX,   XXXXXXX,   _______,   _______,   _______,       SW_WIN,       _______,   _______,  _______,   XXXXXXX,  XXXXXXX
+    KC_F6,     KC_F7,     KC_F8,     KC_F9,     KC_F10,   XXXXXXX, XXXXXXX,  KC_COMM,   KC_7,   KC_8,      KC_9,     KC_DLR,
+    KC_F1,     KC_F2,     KC_F3,     KC_F4,     KC_F5,    XXXXXXX, XXXXXXX,  KC_0,      KC_4,   KC_5,      KC_6,     KC_BSPC,
+    KC_TAB,    CW_TOGG,   KC_LSFT,   KC_SPC,    XXXXXXX,  XXXXXXX, XXXXXXX,  KC_DOT,    KC_1,   KC_2,      KC_3,     KC_ENT,
+    XXXXXXX,   XXXXXXX,   _______,   _______,   _______,       SW_WIN,       _______,   KC_0,   _______,   XXXXXXX,  XXXXXXX
 ),
 
 /*  MEDIA LAYER
 * ,-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------.
-* |       |       |       |       |       |       |       |       |       |       |       |       | 
+* |       |       |       |       |       |       |       |       |       |       |       |       |
 * |       |       |       |       |       |       |       |       | VOLD  |       | VOLU  |       |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-* |       |       |       |       |       |       |       |       |       |       |       |       | 
+* |       |       |       |       |       |       |       |       |       |       |       |       |
 * |       |       |       |       |       |       |       |REWIND | PREV  | MPLY  | NEXT  |  FF   |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-* |       |       |       |       |       |       |       |       |       |       |       |       | 
 * |       |       |       |       |       |       |       |       |       |       |       |       |
-* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------| 
-* |       |       |       |       |       |       |       |       |       | HOLD  |       |       | 
+* |       |       |       |       |       |       |       |       |       |       |       |       |
+* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+* |       |       |       |       |       |       |       |       |       | HOLD  |       |       |
 * |       |       |  REP  |  NAV  | SHFT  |     SPOTL     |NAV-TAB|  SYM  | MEDIA |       |       |
 * `-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------'
-*/ 
- 
+*/
+
 [MED] = LAYOUT(
     XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,  KC_VOLD,  XXXXXXX,  KC_VOLU,  XXXXXXX,
     XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX,  KC_MRWD,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MFFD,
-    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,    
+    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
     XXXXXXX,  XXXXXXX,  _______,  _______,  _______,        SPOTL,       _______,  _______,  _______,  XXXXXXX,  XXXXXXX
 ),
 };
@@ -239,12 +239,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             case OS_CTRL:
             case OS_ALT:
             case OS_CMD:
-                    return true; 
+                    return true;
             default:
                     return false;
             }
     }
-    
+
     oneshot_state os_shft_state = os_up_unqueued;
     oneshot_state os_ctrl_state = os_up_unqueued;
     oneshot_state os_alt_state = os_up_unqueued;
@@ -266,8 +266,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     }
 
     bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-        if (!process_oneshot(keycode, record)) return false;        
-        if (!process_update_sw_win(keycode, record)) return false;        
+        if (!process_oneshot(keycode, record)) return false;
+        if (!process_update_sw_win(keycode, record)) return false;
         return true;
     }
 
@@ -282,7 +282,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 }
                 break;
         }
-    
+
         switch(combo_index) {
             case LA_COMBO_NAV_TO_SYM:
                 if (pressed) {
@@ -302,7 +302,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 }
                 break;
         }
-        
+
         switch(combo_index) {
             case COMBO_ENTER:
                 if (pressed) {
@@ -325,10 +325,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         [COMBO_TAB] = COMBO(tab_combo, KC_TAB),
         [COMBO_UNDO] = COMBO(undo_combo, UNDO),
         [COMBO_REDO] = COMBO(redo_combo, REDO),
-        
+
         // Right Side
         [COMBO_SHIFT_RIGHT] = COMBO(shift_right_combo, OS_SHFT),
-        [COMBO_ENTER] = COMBO(enter_combo, KC_ENT),        
+        [COMBO_ENTER] = COMBO(enter_combo, KC_ENT),
         [LA_COMBO_NAV_TO_SYM] = COMBO(nav_to_sym_combo, LA_NAV),
         [LA_COMBO_SYM_TO_NAV] = COMBO(sym_to_nav_combo, LA_SYM),
         [COMBO_BSPC] = COMBO(bspc_combo, KC_BSPC),
