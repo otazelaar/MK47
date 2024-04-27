@@ -27,8 +27,14 @@
 /* I2C Config for LED Driver */
 #define SNLED27351_I2C_ADDRESS_1 SNLED27351_I2C_ADDRESS_GND
 
+// #define RGB_MATRIX_ENABLE
+// #define RGB_MATRIX_DRIVER = SNLED27351
+
+// | `RGB_MATRIX_LED_COUNT` | (Required) How many RGB lights are present across all drivers | |
+// | `DRIVER_ADDR_<N>` | (Required) Address for the additional RGB drivers | |
+
 /* WB32 MCU has no default definition */
 #define I2C1_OPMODE OPMODE_I2C
 #define I2C1_CLOCK_SPEED 400000
 
-#define TAPPING_TERM_PER_KEY 
+#define TAPPING_TERM_PER_KEY

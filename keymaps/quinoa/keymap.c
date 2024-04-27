@@ -2,6 +2,7 @@
 
 #include "oneshot.h"
 #include "swapper.h"
+#include "color.h"
 
 #define HOME G(KC_UP)
 #define END G(KC_DOWN)
@@ -314,9 +315,77 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         }
     }
 
+    // bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    //     if (get_highest_layer(layer_state) > 0) {
+    //         uint8_t layer = get_highest_layer(layer_state);
+
+    //         for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
+    //             for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
+    //                 uint8_t index = g_led_config.matrix_co[row][col];
+
+    //                 if (index >= led_min && index < led_max && index != NO_LED &&
+    //                 keymap_key_to_keycode(layer, (keypos_t){col,row}) > KC_TRNS) {
+    //                     rgb_matrix_set_color(index, RGB_GREEN);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return false;
+    // }
+
+    bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+        for (uint8_t i = led_min; i < led_max; i++) {
+            switch(get_highest_layer(layer_state|default_layer_state)) {
+                case 2:
+                    rgb_matrix_set_color(i, RGB_BLUE);
+                    break;
+                case 1:
+                    rgb_matrix_set_color(i, RGB_YELLOW);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return false;
+    }
+
+    // bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
+    //     if (rgb_matrix_indicators_advanced_user(led_min, led_max) != true) {
+    //         return false;
+    //     }
+
+    //     for (uint8_t i = led_min; i < led_max; i++) {
+    //         RGB_MATRIX_INDICATOR_SET_COLOR(i, 255, 255, 255);
+    //     }
+
+    //     return true;
+    // }
+
     layer_state_t layer_state_set_user(layer_state_t state) {
         return update_tri_layer_state(state, SYM, NAV, NUM);
         return update_tri_layer_state(state, NAV, SYM, NUM);
+
+    //     switch (get_highest_layer(state)) {
+    //     case DEF:
+    //         rgb_matrix_indicators_advanced_kb(int led_min, int led_max)
+    //         break;
+    //     case SYM:
+    //         rgblight_sethsv (0xFF,  0x00, 0x00);
+    //         break;
+    //     case NAV:
+    //         rgblight_sethsv (0x00,  0xFF, 0x00);
+    //         break;
+    //     case NUM:
+    //         rgblight_sethsv (0x7A,  0x00, 0xFF);
+    //         break;
+    //     default: //  for any other layers, or the default layer
+    //         rgblight_sethsv (0x00,  0xFF, 0xFF);
+    //         break;
+    //     case MED:
+    //         rgblight_sethsv (0xFF,  0xFF, 0x00);
+    //         break;
+    // }
+    // return state;
     }
 
     combo_t key_combos[COMBO_COUNT] = {
