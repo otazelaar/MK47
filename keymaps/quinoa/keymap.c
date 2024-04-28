@@ -271,127 +271,60 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         return true;
     }
 
-    bool process_detected_host_os_kb(os_variant_t detected_os) {
+    // OS Detection
+    os_variant_t detected_host_os_kb(void) {
+        os_variant_t detected_os = detected_host_os();
         if (!process_detected_host_os_user(detected_os)) {
-            return false;
+            return OS_UNSURE;
         }
         switch (detected_os) {
-        case OS_MACOS:
-            // keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
-            // rgb_matrix_set_color_all(RGB_WHITE);
-            // RGB_MATRIX_INDICATOR_SET_COLOR(i, 255, 255, 255);
-
-            // The following line proves that this function is being called.
-            // keymap_config.swap_backslash_backspace = true;
-            printf("OS_MACOS case entered\n"); // Add this line
-            // set_keyboard_color(0, SNLED27351_LED_COUNT, 255, 255, 255); // White
-            // set_keyboard_color(int led_min, int led_max, int r, int g, int b)
-            break;
-        case OS_IOS:
-            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = true;
-            break;
-        case OS_WINDOWS:
-            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = true;
-            // keymap_config.lgui_is_ctl = true;
-            // keymap_config.swap_lctl_lgui = true;
-            // rgb_matrix_set_color_all(RGB_BLUE);
-            break;
-        case OS_LINUX:
-            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
-            break;
-        case OS_UNSURE:
-            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
-            break;
+            case OS_MACOS:
+                return OS_MACOS;
+                break;
+            case OS_IOS:
+                return OS_IOS;
+                break;
+            case OS_WINDOWS:
+                return OS_WINDOWS;
+                break;
+            case OS_LINUX:
+                return OS_LINUX;
+                break;
+            case OS_UNSURE:
+                return OS_UNSURE;
+                break;
         }
-        return true;
+
+        return detected_os;
     }
 
-      bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
+    bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
         if (rgb_matrix_indicators_advanced_user(led_min, led_max) != true) {
             return false;
         }
-    
-        // // Set all keys to white
-        // for (uint8_t i = led_min; i < led_max; i++) {
-        //     RGB_MATRIX_INDICATOR_SET_COLOR(i, 0, 0, 255);
-        // }
 
-        switch (detected_os) {
-        case OS_MACOS:
-            for (uint8_t i = led_min; i < led_max; i++) {
-                RGB_MATRIX_INDICATOR_SET_COLOR(i, 255, 255, 255);
-            }
-            break;
-        case OS_IOS:
-            for (uint8_t i = led_min; i < led_max; i++) {
-                RGB_MATRIX_INDICATOR_SET_COLOR(i, 0, 0, 255);
-            }
-            break;
-        case OS_WINDOWS:
-            for (uint8_t i = led_min; i < led_max; i++) {
-                RGB_MATRIX_INDICATOR_SET_COLOR(i, 255, 0, 0);
-            }
-            break;
-        case OS_LINUX:
-            for (uint8_t i = led_min; i < led_max; i++) {
-                RGB_MATRIX_INDICATOR_SET_COLOR(i, 0, 255, 0);
-            }
-            break;
-        case OS_UNSURE:
-            for (uint8_t i = led_min; i < led_max; i++) {
-                RGB_MATRIX_INDICATOR_SET_COLOR(i, 255, 255, 0);
-            }
-            break;
+        rgb_matrix_set_color_all(RGB_WHITE);
+
+        switch (detected_host_os_kb()) {
+            case OS_MACOS:
+                rgb_matrix_set_color_all(RGB_WHITE);
+                break;
+            case OS_IOS:
+                rgb_matrix_set_color_all(RGB_WHITE);
+                break;
+            case OS_WINDOWS:
+                rgb_matrix_set_color_all(RGB_BLUE);
+                break;
+            case OS_LINUX:
+                rgb_matrix_set_color_all(RGB_GREEN);
+                break;
+            case OS_UNSURE:
+                rgb_matrix_set_color_all(RGB_RED);
+                break;
         }
+
         return true;
     }
-
-    // bool set_keyboard_color(uint8_t led_min, uint8_t led_max, uint8_t r, uint8_t g, uint8_t b) {
-    //     if (rgb_matrix_indicators_advanced_kb(led_min, led_max) != true) {
-    //         return false;
-    //     }
-
-    //     // Set all keys to the specified color
-    //     for (uint8_t i = led_min; i < led_max; i++) {
-    //         RGB_MATRIX_INDICATOR_SET_COLOR(i, r, g, b);
-    //     }
-
-    //     if (process_detected_host_os_kb(OS_MACOS)) {
-    //         set_keyboard_color(0, SNLED27351_LED_COUNT, 255, 255, 255); // White
-    //     }
-
-    //     return true;
-    // }
-
-    //     void process_platform_combo(uint16_t keycode, keyrecord_t *record) {
-    //     uint8_t host_os = guess_host_os();
-    //     uint16_t keycode_to_press = KC_NO;
-
-    //     if (host_os == OS_MACOS || host_os == OS_IOS) {
-    //         switch (keycode) {
-    //         case USR_COPY:
-    //             keycode_to_press = G(KC_C);
-    //             break;
-    //         case USR_PASTE:
-    //             keycode_to_press = G(KC_V);
-    //             break;
-    //         }
-    //     } else {
-    //         switch (keycode) {
-    //         case USR_COPY:
-    //             keycode_to_press = C(KC_C);
-    //             break;
-    //         case USR_PASTE:
-    //             keycode_to_press = C(KC_V);
-    //             break;
-    //         }
-    //     }
-    //     if (record->event.pressed) {
-    //         register_code16(keycode_to_press);
-    //     } else {
-    //         unregister_code16(keycode_to_press);
-    //     }
-    // }
 
     void process_combo_event(uint16_t combo_index, bool pressed) {
 
