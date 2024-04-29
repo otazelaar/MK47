@@ -107,10 +107,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 */
 
 [DEF] = LAYOUT(
-    KC_Q,      KC_W,      KC_F,      KC_P,     KC_B,     XXXXXXX, XXXXXXX,   KC_J,      KC_L,     KC_U,      KC_Y,      KC_QUES,
-    KC_A,      KC_R,      KC_S,      KC_T,     KC_G,     XXXXXXX, XXXXXXX,   KC_M,      KC_N,     KC_E,      KC_I,      KC_O,
-    KC_Z,      KC_X,      KC_C,      KC_D,     KC_V,     XXXXXXX, XXXXXXX,   KC_K,      KC_H,     KC_SLSH,   KC_COMM,   KC_DOT,
-    KC_MCTL,   KC_LPAD,   QK_REP,    LA_NAV,   OS_SHFT,        SPOTL,        LA_R_NAV,  LA_SYM,   LA_MEDIA,  XXXXXXX,   TD(TD_SEARCH)
+    KC_Q,      KC_W,      KC_F,     KC_P,    KC_B,    XXXXXXX, XXXXXXX,  KC_J,      KC_L,    KC_U,      KC_Y,       KC_QUES,
+    KC_A,      KC_R,      KC_S,     KC_T,    KC_G,    XXXXXXX, XXXXXXX,  KC_M,      KC_N,    KC_E,      KC_I,       KC_O,
+    KC_Z,      KC_X,      KC_C,     KC_D,    KC_V,    XXXXXXX, XXXXXXX,  KC_K,      KC_H,    KC_SLSH,   KC_COMM,    KC_DOT,
+    KC_MCTL,   XXXXXXX,  QK_REP,   LA_NAV,  OS_SHFT,       SPOTL,       LA_R_NAV,  LA_SYM,  LA_MEDIA,  XXXXXXX,  TD(TD_SEARCH)
 ),
 
 /*  SYMBOLS LAYER
@@ -276,6 +276,87 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (!process_oneshot(keycode, record)) return false;
         if (!process_update_sw_win(keycode, record)) return false;
+        return true;
+    }
+
+    // OS Detection
+    os_variant_t detected_host_os_kb(void) {
+        os_variant_t detected_os = detected_host_os();
+        if (!process_detected_host_os_user(detected_os)) {
+            return OS_UNSURE;
+        }
+        switch (detected_os) {
+            case OS_MACOS:
+                return OS_MACOS;
+                break;
+            case OS_IOS:
+                return OS_IOS;
+                break;
+            case OS_WINDOWS:
+                return OS_WINDOWS;
+                break;
+            case OS_LINUX:
+                return OS_LINUX;
+                break;
+            case OS_UNSURE:
+                return OS_UNSURE;
+                break;
+        }
+
+        return detected_os;
+    }
+
+    bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
+        if (rgb_matrix_indicators_advanced_user(led_min, led_max) != true) {
+            return false;
+        }
+
+        rgb_matrix_set_color_all(RGB_WHITE);
+
+        switch (detected_host_os_kb()) {
+            case OS_MACOS:
+                rgb_matrix_set_color_all(RGB_WHITE);
+                break;
+            case OS_IOS:
+                rgb_matrix_set_color_all(RGB_WHITE);
+                break;
+            case OS_WINDOWS:
+                rgb_matrix_set_color_all(RGB_BLUE);
+                break;
+            case OS_LINUX:
+                rgb_matrix_set_color_all(RGB_GREEN);
+                break;
+            case OS_UNSURE:
+                rgb_matrix_set_color_all(RGB_RED);
+                break;
+        }
+
+        return true;
+    }
+
+    bool process_detected_host_os_kb(os_variant_t detected_os) {
+        if (!process_detected_host_os_user(detected_os)) {
+            return false;
+        }   
+        switch (detected_os) {
+        case OS_MACOS:
+            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = true;
+            keymap_config.swap_backslash_backspace = true;
+            break;
+        case OS_IOS:
+            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = true;
+            break;
+        case OS_WINDOWS:
+            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
+            keymap_config.swap_escape_capslock = true;
+            break;
+        case OS_LINUX:
+            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
+            break;
+        case OS_UNSURE:
+            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
+            break;
+        }
         return true;
     }
 
