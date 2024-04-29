@@ -38,13 +38,13 @@ enum tap_dance_indexes {
 };
 
 enum combo_events {
-    // Left Side
+    // Left Side Press
     COMBO_SHIFT_LEFT,
     COMBO_TAB,
     COMBO_UNDO,
     COMBO_REDO,
 
-    // Right Side
+    // Right Side Press
     COMBO_SHIFT_RIGHT,
     COMBO_ENTER,
     LA_COMBO_NAV_TO_SYM,
@@ -52,6 +52,11 @@ enum combo_events {
     COMBO_BSPC,
     COMBO_DELETE,
     COMBO_DELETE_LINE,
+
+    // Both Side Press
+    COMBO_CAPS_WORD,
+
+    // Total Combo Count. Always last.
     COMBO_COUNT,
 };
 
@@ -79,6 +84,9 @@ const uint16_t PROGMEM sym_to_nav_combo[] = {KC_ASTR, LA_NAV, COMBO_END};
 const uint16_t PROGMEM bspc_combo[] = {KC_E, KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM delete_combo[] = {KC_L, KC_U, KC_Y, COMBO_END};
 const uint16_t PROGMEM delete_line_combo[] = {KC_L, KC_U, KC_Y, KC_QUOT, COMBO_END};
+
+// Both Sides
+const uint16_t PROGMEM caps_word_combo[] = {KC_T, KC_N, COMBO_END};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -130,7 +138,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /*  NAVIGATION LAYER
 * ,-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------.
-* |       |       |       |       |       |       |       |       |       |       |       |       | 
+* |       |       |       |       |       |       |       |       |       |       |       |       |
 * |  ESC  | SW WIN| TABL  | TABR  |       |       |       |  BOOT |  HOME |   UP  |  END  |  DELW |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 * |       |       |       |       |       |       |       |       |       |       |       |       |
@@ -160,18 +168,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 * |  FN1  |  FN2  |  FN3  |  FN4  |  FN5  |       |       |   0   |   4   |   5   |   6   |  BSPC |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 * |       |       |       |       |       |       |       |       |       |       |       |       |
-* |  TAB  | CWTOG | SHIFT |  SPC  |       |       |       |   .   |   1   |   2   |   3   |  ENT  |
+* |  TAB  |       | SHIFT |  SPC  |       |       |       |   .   |   1   |   2   |   3   |  ENT  |
 * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-* |       |       |       | HOLD  |       |       |       |       | HOLD  |       |       |       |
-* |       |       |  REP  |  NAV  | SHFT  |     SPOTL     |NAV-TAB|  SYM  | MEDIA |       |       |
+* |       |       |       | HOLD  |       |       |       |       |       |       |       |       |
+* |       |       |  REP  |  NAV  | SHFT  |     SPOTL     |NAV-TAB|   0   | MEDIA |       |       |
 * `-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------'
 */
 
 [NUM] = LAYOUT(
-    KC_F6,     KC_F7,     KC_F8,     KC_F9,     KC_F10,   XXXXXXX, XXXXXXX,  KC_COMM,   KC_7,     KC_8,      KC_9,     KC_DLR,
-    KC_F1,     KC_F2,     KC_F3,     KC_F4,     KC_F5,    XXXXXXX, XXXXXXX,  KC_0,      KC_4,     KC_5,      KC_6,     KC_BSPC,
-    KC_TAB,    CW_TOGG,   KC_LSFT,   KC_SPC,    XXXXXXX,  XXXXXXX, XXXXXXX,  KC_DOT,    KC_1,     KC_2,      KC_3,     KC_ENT,
-    XXXXXXX,   XXXXXXX,   _______,   _______,   _______,       SW_WIN,       _______,   _______,  _______,   XXXXXXX,  XXXXXXX
+    KC_F6,     KC_F7,     KC_F8,     KC_F9,     KC_F10,   XXXXXXX, XXXXXXX,  KC_COMM,   KC_7,   KC_8,      KC_9,     KC_DLR,
+    KC_F1,     KC_F2,     KC_F3,     KC_F4,     KC_F5,    XXXXXXX, XXXXXXX,  KC_0,      KC_4,   KC_5,      KC_6,     KC_BSPC,
+    KC_TAB,    XXXXXXX,   KC_LSFT,   KC_SPC,    XXXXXXX,  XXXXXXX, XXXXXXX,  KC_DOT,    KC_1,   KC_2,      KC_3,     KC_ENT,
+    XXXXXXX,   XXXXXXX,   _______,   _______,   _______,       SW_WIN,       _______,   KC_0,   _______,   XXXXXXX,  XXXXXXX
 ),
 
 /*  MEDIA LAYER
@@ -352,36 +360,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         return true;
     }
 
-    // void process_platform_combo(uint16_t keycode, keyrecord_t *record) {
-    //     uint8_t host_os = guess_host_os();
-    //     uint16_t keycode_to_press = KC_NO;
-
-    //     if (host_os == OS_MACOS || host_os == OS_IOS) {
-    //         switch (keycode) {
-    //         case USR_COPY:
-    //             keycode_to_press = G(KC_C);
-    //             break;
-    //         case USR_PASTE:
-    //             keycode_to_press = G(KC_V);
-    //             break;
-    //         }
-    //     } else {
-    //         switch (keycode) {
-    //         case USR_COPY:
-    //             keycode_to_press = C(KC_C);
-    //             break;
-    //         case USR_PASTE:
-    //             keycode_to_press = C(KC_V);
-    //             break;
-    //         }
-    //     }
-    //     if (record->event.pressed) {
-    //         register_code16(keycode_to_press);
-    //     } else {
-    //         unregister_code16(keycode_to_press);
-    //     }
-    // }
-
     void process_combo_event(uint16_t combo_index, bool pressed) {
 
         switch(combo_index) {
@@ -445,4 +423,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         [COMBO_BSPC] = COMBO(bspc_combo, KC_BSPC),
         [COMBO_DELETE] = COMBO(delete_combo, DEL_WORD),
         [COMBO_DELETE_LINE] = COMBO(delete_line_combo, DEL_LINE),
+
+        // Both Sides
+        [COMBO_CAPS_WORD] = COMBO(caps_word_combo, CW_TOGG),
     };
