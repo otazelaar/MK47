@@ -33,3 +33,26 @@
 
 #define TAPPING_TERM_PER_KEY
 #define OS_DETECTION_DEBOUNCE 200
+
+/* Backlighting */
+#define RGBLIGHT_ANIMATIONS
+
+/* Typing heatmap animation settings */
+// In order to change the delay of temperature decrease define `RGB_MATRIX_TYPING_HEATMAP_DECREASE_DELAY_MS`:
+#define RGB_MATRIX_TYPING_HEATMAP_DECREASE_DELAY_MS 50
+
+// As heatmap uses the physical position of the leds set in the g_led_config, you may need to tweak the following
+// options to get the best effect for your keyboard. Note the size of this grid is `224x64`.
+// Limit the distance the effect spreads to surrounding keys.
+#define RGB_MATRIX_TYPING_HEATMAP_SPREAD 40
+
+// Limit how hot surrounding keys get from each press.
+// #define RGB_MATRIX_TYPING_HEATMAP_AREA_LIMIT 16
+
+// Remove the spread effect entirely.
+// #define RGB_MATRIX_TYPING_HEATMAP_SLIM
+
+// It's also possible to adjust the tempo of *heating up*. It's defined as the number of shades that are
+// increased on the [HSV scale](https://en.wikipedia.org/wiki/HSL_and_HSV). Decreasing this value increases
+// the number of keystrokes needed to fully heat up the key.
+#define RGB_MATRIX_TYPING_HEATMAP_INCREASE_STEP 25
