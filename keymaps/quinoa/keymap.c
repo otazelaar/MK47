@@ -61,6 +61,7 @@ enum combo_events {
 
     // Both Side Press
     COMBO_CAPS_WORD,
+    COMBO_SHIFT_DUAL_OSL,
 
     // Total Combo Count. Always last.
     COMBO_COUNT,
@@ -93,6 +94,7 @@ const uint16_t PROGMEM delete_line_combo[] = {KC_L, KC_U, KC_Y, KC_QUOT, COMBO_E
 
 // Both Sides
 const uint16_t PROGMEM caps_word_combo[] = {KC_T, KC_N, COMBO_END};
+const uint16_t PROGMEM shift_dual_osl_combo[] = {KC_S, KC_E, COMBO_END};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -512,4 +514,5 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
         // Both Sides
         [COMBO_CAPS_WORD] = COMBO(caps_word_combo, CW_TOGG),
+        [COMBO_SHIFT_DUAL_OSL] = COMBO(shift_dual_osl_combo, OS_SHFT),
     };
